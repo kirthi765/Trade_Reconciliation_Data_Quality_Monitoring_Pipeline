@@ -83,10 +83,17 @@ reconciliation:
   # this band counts as price_mismatch_within_tol, anything outside as
   # price_mismatch_breach.
   price_tolerance_bps: 10
+  # Timestamps differing by more than this many minutes between ledger and
+  # broker are flagged as timestamp_mismatch (catches TZ-handling bugs).
+  timestamp_tolerance_minutes: 60
+  # Where to write the classified exceptions table.
+  exceptions_csv: data/processed/exceptions.csv
   # Severity scoring used by reports and the dashboard.
   severity:
     matched: 0
     price_mismatch_within_tol: 1
+    symbol_mismatch: 1
+    timestamp_mismatch: 1
     quantity_mismatch: 2
     duplicate: 2
     price_mismatch_breach: 3
