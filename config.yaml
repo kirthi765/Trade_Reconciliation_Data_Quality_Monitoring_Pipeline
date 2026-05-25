@@ -1,0 +1,104 @@
+# ---------------------------------------------------------------------------
+# Trade Reconciliation & Data Quality Monitoring Pipeline -- configuration
+# ---------------------------------------------------------------------------
+# Every tunable value lives here so the code under src/ contains no magic
+# numbers or hardcoded paths. Anything you change here propagates through
+# ingest -> reconcile -> quality_checks -> report -> dashboard.
+
+random_seed: 42
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  market_cache_dir: data/raw/_cache
+  ledger_csv: data/raw/internal_ledger.csv
+  broker_csv: data/raw/broker_feed.csv
+  ground_truth_csv: data/raw/ground_truth.csv
+  sqlite_db: data/processed/trades.db
+  log_file: logs/pipeline.log
+
+market_data:
+  # ~20 liquid US tickers spanning sectors -- enough breadth to be realistic
+  # without making yfinance pulls slow.
+  tickers:
+    - AAPL
+    - MSFT
+    - GOOGL
+    - AMZN
+    - META
+    - NVDA
+    - TSLA
+    - JPM
+    - BAC
+    - GS
+    - WFC
+    - XOM
+    - CVX
+    - JNJ
+    - PFE
+    - UNH
+    - WMT
+    - HD
+    - KO
+    - PEP
+  # Daily bars for ~6 months. Period is passed straight to yfinance.
+  period: "6mo"
+  interval: "1d"
+
+ledger:
+  # Number of synthetic trades to generate against the market data above.
+  num_trades: 5000
+  # Quantity is drawn uniformly from [min, max] in 100-share increments.
+  quantity_min: 100
+  quantity_max: 5000
+  # Price is sampled from the day's [low, high] range with a small spread
+  # so the ledger looks like real fills rather than perfect closes.
+  price_jitter_bps: 5     # +/- 5 bps of noise on the sampled price
+
+# ---------------------------------------------------------------------------
+# Corruption rates for the synthetic broker feed.
+# Each rate is the fraction of ledger rows that get this defect injected.
+# Rates are independent: a single row can collect more than one defect, but
+# the generator records every defect it injects in the ground-truth table so
+# reconciliation accuracy is measurable.
+# ---------------------------------------------------------------------------
+corruption:
+  missing_from_broker_rate: 0.01      # broker silently drops a fill
+  duplicate_rate: 0.01                # broker reports the same fill twice
+  price_within_tol_rate: 0.02         # tiny pricing diff inside tolerance
+  price_breach_rate: 0.01             # large pricing diff outside tolerance
+  quantity_mismatch_rate: 0.01        # wrong share count
+  timestamp_shift_rate: 0.01          # broker timestamp off by hours (TZ bug)
+  symbol_typo_rate: 0.005             # one-character symbol typo
+  missing_from_ledger_rate: 0.005     # extra broker fill with no ledger row
+
+  # Magnitude controls
+  price_within_tol_bps: 3             # within-tolerance perturbation size
+  price_breach_bps: 75                # beyond-tolerance perturbation size
+  quantity_mismatch_pct: 0.10         # +/- 10% quantity error
+  timestamp_shift_hours: 5            # simulate TZ confusion
+
+reconciliation:
+  # Price tolerance used by the Pandas comparison step. Anything inside
+  # this band counts as price_mismatch_within_tol, anything outside as
+  # price_mismatch_breach.
+  price_tolerance_bps: 10
+  # Severity scoring used by reports and the dashboard.
+  severity:
+    matched: 0
+    price_mismatch_within_tol: 1
+    quantity_mismatch: 2
+    duplicate: 2
+    price_mismatch_breach: 3
+    missing_from_broker: 3
+    missing_from_ledger: 3
+
+quality_checks:
+  price_min: 0.01
+  price_max: 100000.0
+  quantity_min: 1
+  quantity_max: 1000000
+
+logging:
+  level: INFO
+  format: "%(asctime)s %(levelname)s %(name)s :: %(message)s"

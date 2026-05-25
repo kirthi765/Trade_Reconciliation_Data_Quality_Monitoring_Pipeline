@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Data caches + generated outputs are reproducible from src/ingest.py
+data/raw/_cache/
+data/raw/*.csv
+data/processed/
+*.db
+*.sqlite
+
+# Keep the data dirs themselves in version control
+!data/raw/
+!data/processed/
+
+# Logs
+logs/*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store

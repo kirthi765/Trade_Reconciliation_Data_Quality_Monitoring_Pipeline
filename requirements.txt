@@ -1,0 +1,6 @@
+pandas>=2.1
+numpy>=1.26
+yfinance>=0.2.40
+pyyaml>=6.0
+streamlit>=1.30
+pytest>=8.0
