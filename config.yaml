@@ -105,6 +105,10 @@ quality_checks:
   price_max: 100000.0
   quantity_min: 1
   quantity_max: 1000000
+  results_csv: data/processed/quality_checks.csv
+
+report:
+  summary_json: data/processed/summary.json
 
 logging:
   level: INFO
