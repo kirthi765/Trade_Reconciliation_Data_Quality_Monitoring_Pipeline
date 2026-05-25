@@ -1,0 +1,23 @@
+table,check,severity,passed,rows_failed,detail
+internal_ledger,schema,info,True,0,all 6 expected columns present with correct types
+internal_ledger,nulls.trade_id,info,True,0,0 null(s) in trade_id
+internal_ledger,nulls.timestamp,info,True,0,0 null(s) in timestamp
+internal_ledger,nulls.symbol,info,True,0,0 null(s) in symbol
+internal_ledger,nulls.side,info,True,0,0 null(s) in side
+internal_ledger,nulls.quantity,info,True,0,0 null(s) in quantity
+internal_ledger,nulls.price,info,True,0,0 null(s) in price
+internal_ledger,range.price,info,True,0,"price outside [0.01, 100000.0]: 0 row(s)"
+internal_ledger,range.quantity,info,True,0,"quantity outside [1, 1000000]: 0 row(s)"
+internal_ledger,vocab.side,info,True,0,"side not in ['BUY', 'SELL']: 0 row(s)"
+internal_ledger,unique.trade_id,error,True,0,0 duplicate trade_id(s)
+broker_feed,schema,info,True,0,all 6 expected columns present with correct types
+broker_feed,nulls.trade_id,info,True,0,0 null(s) in trade_id
+broker_feed,nulls.timestamp,info,True,0,0 null(s) in timestamp
+broker_feed,nulls.symbol,info,True,0,0 null(s) in symbol
+broker_feed,nulls.side,info,True,0,0 null(s) in side
+broker_feed,nulls.quantity,info,True,0,0 null(s) in quantity
+broker_feed,nulls.price,info,True,0,0 null(s) in price
+broker_feed,range.price,info,True,0,"price outside [0.01, 100000.0]: 0 row(s)"
+broker_feed,range.quantity,info,True,0,"quantity outside [1, 1000000]: 0 row(s)"
+broker_feed,vocab.side,info,True,0,"side not in ['BUY', 'SELL']: 0 row(s)"
+broker_feed,unique.trade_id,warn,False,50,50 duplicate trade_id(s)

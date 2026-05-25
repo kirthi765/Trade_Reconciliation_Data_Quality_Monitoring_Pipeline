@@ -1,0 +1,102 @@
+{
+  "detection_accuracy": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "per_class": {
+      "duplicate": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 50
+      },
+      "missing_from_broker": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 50
+      },
+      "missing_from_ledger": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 25
+      },
+      "price_mismatch_breach": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 50
+      },
+      "price_mismatch_within_tol": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 99
+      },
+      "quantity_mismatch": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 50
+      },
+      "symbol_mismatch": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 25
+      },
+      "timestamp_mismatch": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 50
+      }
+    },
+    "precision": 1.0,
+    "recall": 1.0,
+    "tp": 399
+  },
+  "exceptions": {
+    "by_severity": {
+      "1": 174,
+      "2": 100,
+      "3": 125
+    },
+    "by_type": {
+      "duplicate": 50,
+      "missing_from_broker": 50,
+      "missing_from_ledger": 25,
+      "price_mismatch_breach": 50,
+      "price_mismatch_within_tol": 99,
+      "quantity_mismatch": 50,
+      "symbol_mismatch": 25,
+      "timestamp_mismatch": 50
+    },
+    "total_rows": 399,
+    "unique_trade_ids": 393
+  },
+  "quality_checks": {
+    "error": 1,
+    "failed": 1,
+    "info": 20,
+    "total": 22,
+    "warn": 1
+  },
+  "reconciliation_rate": 0.9264,
+  "trades": {
+    "broker_only_trade_ids": 25,
+    "broker_rows": 5025,
+    "clean_trades": 4632,
+    "ledger_rows": 5000,
+    "trades_with_exceptions": 368
+  }
+}
