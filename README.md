@@ -1,5 +1,7 @@
 # Trade Reconciliation & Data Quality Monitoring Pipeline
 
+[![CI](https://github.com/kirthi765/Trade_Reconciliation_Data_Quality_Monitoring_Pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/kirthi765/Trade_Reconciliation_Data_Quality_Monitoring_Pipeline/actions/workflows/ci.yml)
+
 An automated reconciliation tool for a trading firm's internal trade ledger
 against its broker's confirmation feed. Ingests both sides, finds every
 mismatch, classifies the cause, runs structural data-quality checks, and
